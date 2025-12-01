@@ -1,0 +1,110 @@
+.work {
+  padding: 120px 0;
+  background: linear-gradient(180deg, rgba(79, 70, 229, 0.02) 0%, rgba(124, 58, 237, 0.02) 100%);
+}
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  margin-top: 60px;
+}
+
+.work-card {
+  background: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  border: 1px solid rgba(79, 70, 229, 0.1);
+  transition: all 0.3s ease;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  cursor: pointer;
+}
+
+.work-card:hover {
+  border-color: rgba(79, 70, 229, 0.3);
+  box-shadow: 0 20px 50px rgba(79, 70, 229, 0.15);
+}
+
+.work-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.work-card h3 {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+  flex: 1;
+}
+
+.work-card-header svg {
+  color: #4f46e5;
+  flex-shrink: 0;
+  transition: all 0.3s ease;
+}
+
+.work-card:hover .work-card-header svg {
+  color: #7c3aed;
+}
+
+.work-description {
+  color: #606060;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0;
+  flex-grow: 1;
+}
+
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: auto;
+}
+
+.work-tag {
+  font-size: 0.8rem;
+  padding: 0.35rem 0.8rem;
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+  border: 1px solid rgba(79, 70, 229, 0.15);
+  border-radius: 2rem;
+  color: #4f46e5;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.work-card:hover .work-tag {
+  background: linear-gradient(135deg, rgba(79, 70, 229, 0.15) 0%, rgba(124, 58, 237, 0.15) 100%);
+  border-color: rgba(79, 70, 229, 0.3);
+}
+
+@media (max-width: 768px) {
+  .work {
+    padding: 80px 0;
+  }
+
+  .work-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+    margin-top: 40px;
+  }
+
+  .work-card {
+    padding: 1.5rem;
+  }
+
+  .work-card h3 {
+    font-size: 1.1rem;
+  }
+
+  .work-description {
+    font-size: 0.9rem;
+  }
+}
