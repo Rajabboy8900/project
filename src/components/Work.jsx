@@ -7,7 +7,7 @@ export default function Work() {
       id: 1,
       title: 'FastFood Delivery Backend',
       description:
-        'Full backend system including authentication, JWT tokens, refresh tokens, role-based access, products, orders, branches, and courier modules built with TypeScript and Prisma.',
+        'Complete backend architecture for a delivery service, including authentication, JWT/refresh tokens, role-based access, products, categories, orders, branches, and couriers. Built with TypeScript, Node.js, and Prisma.',
       tags: ['TypeScript', 'Node.js', 'Prisma', 'PostgreSQL'],
       link: '#',
     },
@@ -15,43 +15,55 @@ export default function Work() {
       id: 2,
       title: 'CRM Management System',
       description:
-        'Complete CRM backend featuring students, groups, payments, attendance, notifications, filtering, pagination, and admin-level access using NestJS.',
+        'Advanced CRM backend with modules for students, groups, payments, attendance, filtering, pagination, notifications, and full admin authentication. Built using NestJS and PostgreSQL.',
       tags: ['NestJS', 'PostgreSQL', 'Prisma', 'JWT'],
       link: '#',
     },
-    {
-      id: 3,
-      title: 'Spring Boot REST API Service',
-      description:
-        'Scalable REST API with layered architecture, JPA, pagination, search, validation, error handling, and JWT authentication written in Java + Spring Boot.',
-      tags: ['Java', 'Spring Boot', 'Spring Data JPA', 'MySQL'],
-      link: '#',
-    },
+  
     {
       id: 4,
       title: 'Telegram Quiz Bot Backend',
       description:
-        'Telegram bot backend supporting user statistics, score tracking, difficulty levels, and real-time quiz logic.',
+        'Telegram bot backend supporting quiz logic, scoring system, difficulty levels, user statistics, and real-time question delivery. Built with Telegraf and PostgreSQL.',
       tags: ['Node.js', 'Telegraf', 'PostgreSQL', 'Redis'],
       link: '#',
     },
-    {
-      id: 5,
-      title: 'Algo Trading Bot',
-      description:
-        'Python-based trading bot capable of executing automated strategies, analyzing market data, and generating entry/exit signals.',
-      tags: ['Python', 'Pandas', 'NumPy', 'Trading APIs'],
-      link: '#',
-    },
+   
     {
       id: 6,
       title: 'E-Learning Platform Backend',
       description:
-        'Backend system with courses, lessons, user authentication, payments, teacher dashboard, and progress tracking.',
+        'Backend system featuring courses, lessons, teacher dashboard, authentication, payments, and user progress tracking. Designed for scalable education systems.',
       tags: ['Node.js', 'Express', 'MongoDB', 'JWT'],
       link: '#',
     },
+    {
+      id: 7,
+      title: 'Hotel Booking Backend',
+      description:
+        'Reservation backend with room availability, booking management, user authentication, payment integration, and admin dashboard features.',
+      tags: ['TypeScript', 'NestJS', 'PostgreSQL'],
+      link: '#',
+    },
+    {
+      id: 8,
+      title: 'Real-Time Chat API',
+      description:
+        'WebSocket-powered chat backend with typing indicators, message history, private rooms, and Redis-based session management.',
+      tags: ['Node.js', 'WebSocket', 'Redis', 'JWT'],
+      link: '#',
+    },
+    {
+      id: 9,
+      title: 'URL Shortener Service',
+      description:
+        'High-performance URL shortener API supporting analytics, click tracking, and custom aliases.',
+      tags: ['Node.js', 'Express', 'MongoDB'],
+      link: '#',
+    },
+  
   ];
+  
   
 
   const containerVariants = {
