@@ -43,13 +43,14 @@ export default function Navigation() {
           ))}
         </ul>
         <motion.button
-  className="nav-pattern"
-  whileHover={{ scale: 1.1, rotate: 5 }}
+  className="nav-cta nav-pattern"
+  whileHover={{ scale: 1.1, rotate: 2 }}
   whileTap={{ scale: 0.95 }}
 >
-  <img src="/ornament.svg" alt="pattern" width="18" />
-  Uzbek Pattern
+  <img src="/ornament.svg" alt="pattern" className="pattern-icon" />
+  UzPattern
 </motion.button>
+
 
 
         <button className="nav-toggle mobile" onClick={() => setIsOpen(!isOpen)}>
