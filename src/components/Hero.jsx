@@ -60,16 +60,6 @@ export default function Hero() {
             Backend developer
           </motion.p>
 
-          <motion.div variants={itemVariants} className="hero-cta-group">
-            <motion.button
-              className="hero-cta"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Contact
-            </motion.button>
-          </motion.div>
-
           <motion.div variants={itemVariants} className="hero-socials">
             <motion.a
               href="https://github.com/Rajabboy8900"
@@ -82,6 +72,8 @@ export default function Hero() {
   href="https://www.linkedin.com/in/rajabboy007/"
   target="_blank"
   rel="noopener noreferrer"
+
+
   whileHover={{ scale: 1.1, color: '#4f46e5' }}
   whileTap={{ scale: 0.95 }}
 >
