@@ -72,26 +72,31 @@ export default function Hero() {
 
           <motion.div variants={itemVariants} className="hero-socials">
             <motion.a
-              href="#"
+              href="https://github.com/Rajabboy8900"
               whileHover={{ scale: 1.1, color: '#4f46e5' }}
               whileTap={{ scale: 0.95 }}
             >
               GitHub
             </motion.a>
             <motion.a
-              href="#"
-              whileHover={{ scale: 1.1, color: '#4f46e5' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              LinkedIn
-            </motion.a>
-            <motion.a
-              href="#"
-              whileHover={{ scale: 1.1, color: '#4f46e5' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Twitter
-            </motion.a>
+  href="https://www.linkedin.com/in/rajabboy007/"
+  target="_blank"
+  rel="noopener noreferrer"
+  whileHover={{ scale: 1.1, color: '#4f46e5' }}
+  whileTap={{ scale: 0.95 }}
+>
+  LinkedIn
+</motion.a>
+<motion.a
+  href="https://t.me/R_rajabovv"
+  target="_blank"
+  rel="noopener noreferrer"
+  whileHover={{ scale: 1.1, color: '#4f46e5' }}
+  whileTap={{ scale: 0.95 }}
+>
+  Telegram
+</motion.a>
+
           </motion.div>
         </motion.div>
 

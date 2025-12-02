@@ -5,6 +5,7 @@ import path from 'path';
 export default defineConfig({
   base: '/',
   plugins: [react()],
+  publicDir: 'public',
   build: {
     outDir: 'dist',
   },
@@ -13,6 +14,12 @@ export default defineConfig({
     host: true,
   },
 });
+
+
+
+
+
+
 
 
 
