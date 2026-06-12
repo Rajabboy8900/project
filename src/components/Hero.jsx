@@ -36,7 +36,7 @@ export default function Hero() {
             animate={{ y: [0, -15, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
           >
-            <img src="/image.png" alt="Rajabboy" className="profile-img" />
+            <img src="/icon.png" alt="Rajabboy Icon" className="profile-img" />
           </motion.div>
         </motion.div>
 
