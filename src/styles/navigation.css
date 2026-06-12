@@ -1,17 +1,21 @@
 .nav {
-  position: sticky;
+  position: fixed;
   top: 0;
+  left: 0;
   width: 100%;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  z-index: 100;
+  padding: 1.5rem 0;
+  z-index: 1000;
+  background: var(--bg-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-glass);
+  transition: all 0.3s ease;
 }
 
 .nav-container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: 1rem 20px;
+  padding: 0 24px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -19,151 +23,127 @@
 
 .nav-logo a {
   font-size: 1.5rem;
-  font-weight: 700;
-  color: #1a1a1a;
+  font-weight: 800;
+  color: var(--text-main);
   text-decoration: none;
   letter-spacing: -0.5px;
 }
 
 .nav-menu.desktop {
   display: flex;
-  list-style: none;
   gap: 2.5rem;
-  margin: 0;
+  list-style: none;
 }
 
 .nav-menu.desktop a {
-  font-size: 0.95rem;
-  color: #404040;
+  color: var(--text-muted);
   text-decoration: none;
+  font-size: 1rem;
   font-weight: 500;
   transition: color 0.3s ease;
   position: relative;
 }
 
-.nav-menu.desktop a:after {
+.nav-menu.desktop a:hover {
+  color: var(--text-main);
+}
+
+.nav-menu.desktop a::after {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 0;
   width: 0;
   height: 2px;
-  background: #4f46e5;
+  bottom: -4px;
+  left: 0;
+  background: var(--accent);
   transition: width 0.3s ease;
+  box-shadow: var(--neon-glow);
 }
 
-.nav-menu.desktop a:hover {
-  color: #4f46e5;
-}
-
-.nav-menu.desktop a:hover:after {
+.nav-menu.desktop a:hover::after {
   width: 100%;
 }
 
-.nav-cta {
-  padding: 0.6rem 1.5rem;
-  background: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  font-size: 0.9rem;
+.nav-pattern {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--border-glass);
+  color: var(--text-main);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+  font-weight: 600;
+  backdrop-filter: blur(4px);
   transition: all 0.3s ease;
 }
-
-.nav-cta:hover {
-  background: #4338ca;
-  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.3);
+.nav-pattern:hover {
+  background: rgba(255,255,255,0.1);
+  box-shadow: 0 0 15px rgba(255,255,255,0.1);
 }
 
-.nav-toggle {
+.pattern-icon {
+  width: 18px;
+  height: 18px;
+  filter: invert(1);
+}
+
+.nav-toggle.mobile {
   display: none;
-  flex-direction: column;
   background: none;
   border: none;
   cursor: pointer;
-  gap: 6px;
+  flex-direction: column;
+  gap: 5px;
 }
 
-.nav-toggle span {
+.nav-toggle.mobile span {
   width: 25px;
-  height: 3px;
-  background: #1a1a1a;
-  border-radius: 2px;
-  transition: all 0.3s ease;
+  height: 2px;
+  background: var(--text-main);
+  transition: 0.3s;
 }
 
 .nav-menu.mobile {
   display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: rgba(255, 255, 255, 0.98);
-  backdrop-filter: blur(10px);
-  flex-direction: column;
-  padding: 1rem 20px;
-  gap: 1rem;
-  list-style: none;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.nav-menu.mobile a {
-  color: #404040;
-  text-decoration: none;
-  font-weight: 500;
-  display: block;
-  padding: 0.5rem 0;
 }
 
 @media (max-width: 768px) {
   .nav-menu.desktop {
     display: none;
   }
-
-  .nav-toggle {
+  .nav-pattern {
+    display: none;
+  }
+  .nav-toggle.mobile {
     display: flex;
   }
-
   .nav-menu.mobile {
     display: flex;
+    flex-direction: column;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border-glass);
+    padding: 1rem 0;
+    list-style: none;
+    overflow: hidden;
   }
-
-  .nav-container {
-    padding: 1rem 16px;
+  .nav-menu.mobile li {
+    text-align: center;
   }
-
-  .nav-logo a {
-    font-size: 1.25rem;
+  .nav-menu.mobile a {
+    display: block;
+    padding: 1rem;
+    color: var(--text-main);
+    text-decoration: none;
+    font-size: 1.1rem;
+    font-weight: 500;
   }
-}
-
-
-
-/* ✨ 🌿 MILLIIY NAQSHLI TUGMA STYLES ✨ */
-.nav-pattern {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 0.6rem 1.2rem;
-  font-weight: 600;
-  font-size: 0.9rem;
-  cursor: pointer;
-  background: rgba(79, 70, 229, 0.08);
-  border: 2px solid transparent;
-  border-image: url('/ornament-border.png') 30 round;
-  border-radius: 0.5rem;
-  transition: 0.3s ease;
-}
-
-.nav-pattern:hover {
-  background: rgba(79, 70, 229, 0.15);
-  transform: translateY(-2px);
-  box-shadow: 0 8px 16px rgba(79, 70, 229, 0.25);
-}
-
-.pattern-icon {
-  width: 18px;
-  height: 18px;
 }

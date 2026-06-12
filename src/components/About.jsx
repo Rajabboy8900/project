@@ -26,7 +26,6 @@ export default function About() {
     <section className="about" id="about" ref={ref}>
       <div className="container">
 
-        {/* Header */}
         <motion.div
           className="section-header"
           initial={{ opacity: 0, y: -20 }}
@@ -48,7 +47,6 @@ export default function About() {
 
           
 
-          {/* RIGHT SIDE – TEXT */}
           <motion.div className="about-text-block" variants={containerVariants}>
             <motion.p variants={itemVariants} className="about-text">
               I’m a backend developer with a strong foundation in building clean, reliable,

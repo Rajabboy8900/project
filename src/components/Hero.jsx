@@ -1,104 +1,45 @@
 import { motion } from 'framer-motion';
-import { useEffect, useState } from 'react';
 import '../styles/hero.css';
 
 export default function Hero() {
-  const [isVisible, setIsVisible] = useState(true);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  };
-
-  const floatingVariants = {
-    animate: {
-      y: [0, -20, 0],
-      transition: {
-        duration: 4,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      },
-    },
-  };
-
   return (
     <section className="hero" id="home">
-      <div className="container hero-content">
-        <motion.div
+      <div className="hero-content">
+        
+        <motion.div 
           className="hero-text"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isVisible ? 'visible' : 'hidden'}
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          <motion.p variants={itemVariants} className="hero-greeting">
-            Hi,
-          </motion.p>
+          <p className="hero-greeting" style={{color: '#6b7280', fontSize: '1.2rem'}}>Hi,</p>
+          <h1 className="hero-title">
+            I'm <span className="accent">Rajabboy</span>
+          </h1>
+          <p className="hero-subtitle">Backend Developer</p>
+          
+          <div className="hero-socials">
+            <a href="https://github.com/Rajabboy8900" target="_blank" rel="noreferrer">GitHub</a>
+            <a href="https://www.linkedin.com/in/rajabboy007/" target="_blank" rel="noreferrer">LinkedIn</a>
+            <a href="https://t.me/R_rajabovv" target="_blank" rel="noreferrer">Telegram</a>
+          </div>
+        </motion.div>
 
-          <motion.h1 variants={itemVariants} className="hero-title">
-            I'm <span className="ac cent">Rajabboy</span>
-          </motion.h1>
-
-          <motion.p variants={itemVariants} className="hero-subtitle">
-            Backend developer
-          </motion.p>
-
-          <motion.div variants={itemVariants} className="hero-socials">
-            <motion.a
-              href="https://github.com/Rajabboy8900"
-              whileHover={{ scale: 1.1, color: '#4f46e5' }}
-              whileTap={{ scale: 0.95 }}
-            >
-              GitHub
-            </motion.a>
-            <motion.a
-  href="https://www.linkedin.com/in/rajabboy007/"
-  target="_blank"
-  rel="noopener noreferrer"
-
-
-  whileHover={{ scale: 1.1, color: '#4f46e5' }}
-  whileTap={{ scale: 0.95 }}
->
-  LinkedIn
-</motion.a>
-<motion.a
-  href="https://t.me/R_rajabovv"
-  target="_blank"
-  rel="noopener noreferrer"
-  whileHover={{ scale: 1.1, color: '#4f46e5' }}
-  whileTap={{ scale: 0.95 }}
->
-  Telegram
-</motion.a>
-
+        <motion.div 
+          className="hero-visual"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8 }}
+        >
+          <motion.div 
+            className="blob"
+            animate={{ y: [0, -15, 0] }}
+            transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+          >
+            <img src="/image.png" alt="Rajabboy" className="profile-img" />
           </motion.div>
         </motion.div>
 
-        <motion.div
-          className="hero-visual"
-          variants={floatingVariants}
-          animate="animate"
-        >
-          <div className="blob"></div>
-        </motion.div>
       </div>
     </section>
   );

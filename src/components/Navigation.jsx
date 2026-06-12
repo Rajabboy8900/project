@@ -27,7 +27,6 @@ export default function Navigation() {
       transition={{ duration: 0.6 }}
     >
       <div className="nav-container">
-        {/* LOGO */}
         <motion.div
           className="nav-logo"
           whileHover={{ scale: 1.05 }}
@@ -36,7 +35,6 @@ export default function Navigation() {
           <a href="#home">RajabboyDev</a>
         </motion.div>
 
-        {/* DESKTOP MENU */}
         <ul className="nav-menu desktop">
           {['Home', 'About', 'Skills', 'Work', 'Contact'].map((item, i) => (
             <motion.li
@@ -51,7 +49,6 @@ export default function Navigation() {
           ))}
         </ul>
 
-        {/* ⭐️ MILLIIY NAQSH TUGMASI */}
         <motion.button
           className="nav-pattern"
           whileHover={{ scale: 1.1, rotate: 2 }}
@@ -61,14 +58,12 @@ export default function Navigation() {
           UzPattern
         </motion.button>
 
-        {/* MOBILE MENU TOGGLE */}
         <button className="nav-toggle mobile" onClick={() => setIsOpen(!isOpen)}>
           <span></span>
           <span></span>
           <span></span>
         </button>
 
-        {/* MOBILE NAV LINKS */}
         <motion.ul
           className="nav-menu mobile"
           variants={mobileMenuVariants}

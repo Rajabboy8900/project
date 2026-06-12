@@ -9,41 +9,70 @@ export default function Contact() {
     message: '',
   });
 
-  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [status, setStatus] = useState({ type: '', msg: '' });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
+      transition: { staggerChildren: 0.1 },
     },
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
-      opacity: 1,
-      y: 0,
+      opacity: 1, y: 0,
       transition: { duration: 0.6 },
     },
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsSubmitted(true);
-    setTimeout(() => {
-      setIsSubmitted(false);
-      setFormData({ name: '', email: '', message: '' });
-    }, 3000);
+    setIsSubmitting(true);
+    setStatus({ type: '', msg: '' });
+
+    // .env fayldan ma'lumotlarni olish
+    const token = import.meta.env.VITE_BOT_TOKEN;
+    const chatId = import.meta.env.VITE_CHAT_ID;
+
+    // Telegramga boradigan xabar formati
+    const telegramMessage = `
+📩 **Yangi Xabar!**
+👤 **Ism:** ${formData.name}
+📧 **Email:** ${formData.email}
+📝 **Xabar:** ${formData.message}
+    `;
+
+    try {
+      const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: chatId,
+          text: telegramMessage,
+          parse_mode: 'Markdown',
+        }),
+      });
+
+      if (response.ok) {
+        setStatus({ type: 'success', msg: "Xabar yuborildi! Tez orada javob beraman. ✅" });
+        setFormData({ name: '', email: '', message: '' });
+      } else {
+        throw new Error();
+      }
+    } catch (error) {
+      setStatus({ type: 'error', msg: "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring. ❌" });
+    } finally {
+      setIsSubmitting(false);
+      // 5 soniyadan keyin status xabarini o'chirish
+      setTimeout(() => setStatus({ type: '', msg: '' }), 5000);
+    }
   };
 
   const handleChange = (e) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value,
-    });
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
@@ -60,7 +89,7 @@ export default function Contact() {
           <div className="underline"></div>
         </motion.div>
 
-        <motion.div
+        <motion.div 
           className="contact-content"
           variants={containerVariants}
           initial="hidden"
@@ -70,19 +99,11 @@ export default function Contact() {
           <motion.div className="contact-text" variants={itemVariants}>
             <p>Have a project in mind? Let's work together and create something amazing.</p>
             <div className="contact-links">
-              <motion.a
-                href="rajabbboyrajabov@gmail.com"
-                whileHover={{ x: 5 }}
-                whileTap={{ scale: 0.95 }}
-              >
+              <motion.a href="mailto:rajabbboyrajabov@gmail.com" whileHover={{ x: 5 }}>
                 rajabbboyrajabov@gmail.com
               </motion.a>
-              <motion.a
-                href="tel:+998978546100"
-                whileHover={{ x: 5 }}
-                whileTap={{ scale: 0.95 }}
-              >
-               +998978546100
+              <motion.a href="tel:+998978546100" whileHover={{ x: 5 }}>
+                +998978546100
               </motion.a>
             </div>
           </motion.div>
@@ -92,7 +113,7 @@ export default function Contact() {
               <input
                 type="text"
                 name="name"
-                placeholder="Rajabboy"
+                placeholder="Ismingiz"
                 value={formData.name}
                 onChange={handleChange}
                 required
@@ -103,7 +124,7 @@ export default function Contact() {
               <input
                 type="email"
                 name="email"
-                placeholder="rajabbboyrajabov@gmail.com"
+                placeholder="Emailingiz"
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -113,7 +134,7 @@ export default function Contact() {
             <div className="form-group">
               <textarea
                 name="message"
-                placeholder="Your message"
+                placeholder="Xabaringiz"
                 rows="5"
                 value={formData.message}
                 onChange={handleChange}
@@ -124,21 +145,20 @@ export default function Contact() {
             <motion.button
               type="submit"
               className="submit-btn"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              disabled={isSubmitted}
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              disabled={isSubmitting}
             >
-              {isSubmitted ? 'Sent!' : 'Send Message'}
+              {isSubmitting ? 'Yuborilmoqda...' : 'Send Message'}
             </motion.button>
 
-            {isSubmitted && (
+            {status.msg && (
               <motion.p
-                className="success-message"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0 }}
+                className={`status-message ${status.type}`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
               >
-                Thanks for reaching out! I'll get back to you soon.
+                {status.msg}
               </motion.p>
             )}
           </motion.form>
