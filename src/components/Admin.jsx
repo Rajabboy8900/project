@@ -90,6 +90,11 @@ export default function Admin() {
       .catch((err) => console.error(err));
   }, [token]);
 
+  // Scroll to form helper
+  const scrollToForm = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   // Project CRUD operations
   const handleProjectSubmit = async (e) => {
     e.preventDefault();
@@ -347,13 +352,16 @@ export default function Admin() {
                         <div className="action-btns">
                           <button 
                             className="btn-edit"
-                            onClick={() => setProjectForm({
-                              id: project.id,
-                              title: project.title,
-                              description: project.description,
-                              tags: project.tags,
-                              link: project.link,
-                            })}
+                            onClick={() => {
+                              setProjectForm({
+                                id: project.id,
+                                title: project.title,
+                                description: project.description,
+                                tags: project.tags,
+                                link: project.link,
+                              });
+                              scrollToForm();
+                            }}
                           >
                             Edit
                           </button>
@@ -430,11 +438,14 @@ export default function Admin() {
                         <div className="action-btns">
                           <button 
                             className="btn-edit"
-                            onClick={() => setSkillForm({
-                              id: skill.id,
-                              name: skill.name,
-                              category: skill.category,
-                            })}
+                            onClick={() => {
+                              setSkillForm({
+                                id: skill.id,
+                                name: skill.name,
+                                category: skill.category,
+                              });
+                              scrollToForm();
+                            }}
                           >
                             Edit
                           </button>
