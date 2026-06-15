@@ -33,11 +33,9 @@ export default function Contact() {
     setIsSubmitting(true);
     setStatus({ type: '', msg: '' });
 
-    // .env fayldan ma'lumotlarni olish
-    const token = import.meta.env.VITE_BOT_TOKEN;
-    const chatId = import.meta.env.VITE_CHAT_ID;
+    const token = import.meta.env.TELEGRAM_BOT_TOKEN;
+    const chatId = import.meta.env.TELEGRAM_CHAT_ID;
 
-    // Telegramga boradigan xabar formati
     const telegramMessage = `
 📩 **Yangi Xabar!**
 👤 **Ism:** ${formData.name}
