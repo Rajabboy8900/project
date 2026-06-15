@@ -1,0 +1,240 @@
+.admin-panel {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  padding: 4rem 2rem;
+  font-family: inherit;
+}
+
+/* Login Page Styling */
+.login-container {
+  max-width: 400px;
+  margin: 100px auto 0;
+  background: var(--bg-color-light);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+  text-align: center;
+}
+
+.login-container h2 {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #a1a1aa 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Dashboard Layout */
+.admin-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  background: var(--bg-color-light);
+  border: 1px solid var(--border-glass);
+  border-radius: 24px;
+  padding: 3rem;
+  backdrop-filter: blur(10px);
+}
+
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.admin-header h1 {
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border-glass);
+  color: var(--text-muted);
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main);
+  border-color: var(--text-main);
+}
+
+.admin-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-glass);
+  padding-bottom: 1rem;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.tab-btn.active {
+  color: var(--accent-light);
+}
+
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: -17px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--accent);
+  box-shadow: var(--neon-glow);
+}
+
+/* Forms */
+.admin-form {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 3rem;
+}
+
+.admin-form h3 {
+  margin-bottom: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Lists and Tables */
+.admin-table-container {
+  overflow-x: auto;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.admin-table th, 
+.admin-table td {
+  padding: 1.2rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-glass);
+}
+
+.admin-table th {
+  color: var(--text-main);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.admin-table td {
+  color: var(--text-muted);
+}
+
+.action-btns {
+  display: flex;
+  gap: 0.8rem;
+}
+
+.btn-edit {
+  background: rgba(56, 189, 248, 0.1);
+  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+  background: #38bdf8;
+  color: #fff;
+}
+
+.btn-delete {
+  background: rgba(239, 68, 68, 0.1);
+  color: #ef4444;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-delete:hover {
+  background: #ef4444;
+  color: #fff;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 0.6rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(139, 92, 246, 0.4);
+}
+
+/* Messages styles */
+.message-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  position: relative;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.message-meta h4 {
+  color: var(--text-main);
+  font-size: 1.1rem;
+}
+
+.message-meta span {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.message-body {
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}

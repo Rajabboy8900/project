@@ -1,37 +1,56 @@
 import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
 import '../styles/skills.css';
 
+const defaultSkillCategories = [
+  {
+    name: 'Backend',
+    skills: [
+      "JavaScript",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "NestJS",
+      "Java (intermediate)",
+      "Spring Boot ",
+      "Spring WebFlux (basic)",
+      "SQL",
+      "HTML (basic)",
+      "CSS (basic)"
+    ]
+  },
+  {
+    name: 'Databases',
+    skills: ['PostgreSQL', 'MongoDB', 'Mongoose', 'TypeORM', 'MySQL'],
+  },
+  {
+    name: 'DevOps',
+    skills: ['Docker', 'AWS', 'CI/CD', 'Linux'],
+  },
+  {
+    name: 'Tools',
+    skills: ['Git', 'REST APIs', 'GraphQL', 'Postman', 'VS Code'],
+  },
+];
+
 export default function Skills() {
-  const skillCategories = [
-    {
-      name: 'Backend',
-      skills: [
-        "JavaScript",
-        "TypeScript",
-        "Node.js",
-        "Express.js",
-        "NestJS",
-        "Java (intermediate)",
-        "Spring Boot ",
-        "Spring WebFlux (basic)",
-        "SQL",
-        "HTML (basic)",
-        "CSS (basic)"
-      ]
-          },
-    {
-      name: 'Databases',
-      skills: ['PostgreSQL', 'MongoDB', 'Mongoose', 'TypeORM', 'MySQL'],
-    },
-    {
-      name: 'DevOps',
-      skills: ['Docker', 'AWS', 'CI/CD', 'Linux'],
-    },
-    {
-      name: 'Tools',
-      skills: ['Git', 'REST APIs', 'GraphQL', 'Postman', 'VS Code'],
-    },
-  ];
+  const [skillCategories, setSkillCategories] = useState(defaultSkillCategories);
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/skills')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data) && data.length > 0) {
+          const categories = ['Backend', 'Databases', 'DevOps', 'Tools'];
+          const grouped = categories.map((cat) => ({
+            name: cat,
+            skills: data.filter((s) => s.category === cat).map((s) => s.name),
+          }));
+          setSkillCategories(grouped);
+        }
+      })
+      .catch((err) => console.log('Error fetching skills, using static data', err));
+  }, []);
 
   const containerVariants = {
     hidden: { opacity: 0 },

@@ -33,25 +33,11 @@ export default function Contact() {
     setIsSubmitting(true);
     setStatus({ type: '', msg: '' });
 
-    const token = import.meta.env.TELEGRAM_BOT_TOKEN;
-    const chatId = import.meta.env.TELEGRAM_CHAT_ID;
-
-    const telegramMessage = `
-📩 **Yangi Xabar!**
-👤 **Ism:** ${formData.name}
-📧 **Email:** ${formData.email}
-📝 **Xabar:** ${formData.message}
-    `;
-
     try {
-      const response = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+      const response = await fetch('http://localhost:5000/api/contact', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          chat_id: chatId,
-          text: telegramMessage,
-          parse_mode: 'Markdown',
-        }),
+        body: JSON.stringify(formData),
       });
 
       if (response.ok) {
@@ -64,7 +50,6 @@ export default function Contact() {
       setStatus({ type: 'error', msg: "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring. ❌" });
     } finally {
       setIsSubmitting(false);
-      // 5 soniyadan keyin status xabarini o'chirish
       setTimeout(() => setStatus({ type: '', msg: '' }), 5000);
     }
   };
