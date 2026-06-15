@@ -4,14 +4,12 @@ import * as bcrypt from 'bcryptjs';
 const prisma = new PrismaClient();
 
 async function main() {
-  // Clear existing data
   await prisma.admin.deleteMany({});
   await prisma.skill.deleteMany({});
   await prisma.project.deleteMany({});
 
   console.log('Seeding database...');
 
-  // Create Admin
   const hashedPassword = await bcrypt.hash('admin123', 10);
   const admin = await prisma.admin.create({
     data: {
@@ -21,9 +19,7 @@ async function main() {
   });
   console.log(`Created admin: ${admin.username}`);
 
-  // Create Skills
   const skillsData = [
-    // Backend
     { name: 'JavaScript', category: 'Backend' },
     { name: 'TypeScript', category: 'Backend' },
     { name: 'Node.js', category: 'Backend' },
@@ -59,7 +55,6 @@ async function main() {
   }
   console.log(`Created ${skillsData.length} skills.`);
 
-  // Create Projects
   const projectsData = [
     {
       title: 'FastFood Delivery Backend',
