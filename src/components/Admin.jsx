@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { API_URL } from '../config';
 import '../styles/admin.css';
 
 export default function Admin() {
@@ -23,7 +24,7 @@ export default function Admin() {
     e.preventDefault();
     setError('');
     try {
-      const res = await fetch('http://localhost:5000/api/admin/login', {
+      const res = await fetch(`${API_URL}/api/admin/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ username, password }),
@@ -64,19 +65,19 @@ export default function Admin() {
     if (!token) return;
 
     // Fetch projects
-    fetch('http://localhost:5000/api/projects')
+    fetch(`${API_URL}/api/projects`)
       .then((res) => res.json())
       .then((data) => setProjects(data))
       .catch((err) => console.error(err));
 
     // Fetch skills
-    fetch('http://localhost:5000/api/skills')
+    fetch(`${API_URL}/api/skills`)
       .then((res) => res.json())
       .then((data) => setSkills(data))
       .catch((err) => console.error(err));
 
     // Fetch messages
-    fetchWithAuth('http://localhost:5000/api/messages')
+    fetchWithAuth(`${API_URL}/api/messages`)
       .then((res) => {
         if (res.status === 401) {
           handleLogout();
@@ -94,8 +95,8 @@ export default function Admin() {
     e.preventDefault();
     const isEdit = !!projectForm.id;
     const url = isEdit 
-      ? `http://localhost:5000/api/projects/${projectForm.id}`
-      : 'http://localhost:5000/api/projects';
+      ? `${API_URL}/api/projects/${projectForm.id}`
+      : `${API_URL}/api/projects`;
     const method = isEdit ? 'PUT' : 'POST';
 
     try {
@@ -121,7 +122,7 @@ export default function Admin() {
   const handleProjectDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this project?')) return;
     try {
-      const res = await fetchWithAuth(`http://localhost:5000/api/projects/${id}`, {
+      const res = await fetchWithAuth(`${API_URL}/api/projects/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {
@@ -137,8 +138,8 @@ export default function Admin() {
     e.preventDefault();
     const isEdit = !!skillForm.id;
     const url = isEdit 
-      ? `http://localhost:5000/api/skills/${skillForm.id}`
-      : 'http://localhost:5000/api/skills';
+      ? `${API_URL}/api/skills/${skillForm.id}`
+      : `${API_URL}/api/skills`;
     const method = isEdit ? 'PUT' : 'POST';
 
     try {
@@ -164,7 +165,7 @@ export default function Admin() {
   const handleSkillDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this skill?')) return;
     try {
-      const res = await fetchWithAuth(`http://localhost:5000/api/skills/${id}`, {
+      const res = await fetchWithAuth(`${API_URL}/api/skills/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {
@@ -179,7 +180,7 @@ export default function Admin() {
   const handleMessageDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this message?')) return;
     try {
-      const res = await fetchWithAuth(`http://localhost:5000/api/messages/${id}`, {
+      const res = await fetchWithAuth(`${API_URL}/api/messages/${id}`, {
         method: 'DELETE',
       });
       if (res.ok) {

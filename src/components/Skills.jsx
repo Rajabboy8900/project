@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 import '../styles/skills.css';
 
 const defaultSkillCategories = [
@@ -37,7 +38,7 @@ export default function Skills() {
   const [skillCategories, setSkillCategories] = useState(defaultSkillCategories);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/skills')
+    fetch(`${API_URL}/api/skills`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {

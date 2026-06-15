@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { useState, useEffect } from 'react';
+import { API_URL } from '../config';
 import '../styles/work.css';
 
 const defaultProjects = [
@@ -65,7 +66,7 @@ export default function Work() {
   const [projects, setProjects] = useState(defaultProjects);
 
   useEffect(() => {
-    fetch('http://localhost:5000/api/projects')
+    fetch(`${API_URL}/api/projects`)
       .then((res) => res.json())
       .then((data) => {
         if (Array.isArray(data) && data.length > 0) {
