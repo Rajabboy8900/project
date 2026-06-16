@@ -45,8 +45,6 @@ export default function About() {
           viewport={{ once: true, margin: '-100px' }}
         >
 
-          
-
           <motion.div className="about-text-block" variants={containerVariants}>
             <motion.p variants={itemVariants} className="about-text">
               I’m a backend developer with a strong foundation in building clean, reliable,

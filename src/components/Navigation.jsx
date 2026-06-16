@@ -36,7 +36,7 @@ export default function Navigation() {
         </motion.div>
 
         <ul className="nav-menu desktop">
-          {['Home', 'About', 'Skills', 'Work', 'Contact'].map((item, i) => (
+          {['Home', 'About', 'Skills', 'Work', 'Blog', 'Contact'].map((item, i) => (
             <motion.li
               key={item}
               custom={i}
@@ -70,7 +70,7 @@ export default function Navigation() {
           initial="hidden"
           animate={isOpen ? 'visible' : 'hidden'}
         >
-          {['Home', 'About', 'Skills', 'Work', 'Contact'].map((item) => (
+          {['Home', 'About', 'Skills', 'Work', 'Blog', 'Contact'].map((item) => (
             <li key={item}>
               <a href={`#${item.toLowerCase()}`} onClick={() => setIsOpen(false)}>
                 {item}

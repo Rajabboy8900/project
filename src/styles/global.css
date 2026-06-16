@@ -105,3 +105,43 @@ body::before {
   z-index: -1;
   opacity: 0.5;
 }
+
+/* Scroll Progress Bar */
+.scroll-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--accent-light), var(--accent));
+  box-shadow: 0 0 10px var(--accent-neon), 0 0 20px var(--accent-neon);
+  z-index: 9999;
+  width: 0%;
+  transition: width 0.1s ease-out;
+  pointer-events: none;
+}
+
+/* Mouse Glow Effect */
+.mouse-glow {
+  width: 350px;
+  height: 350px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.18) 0%, rgba(139, 92, 246, 0.06) 45%, rgba(139, 92, 246, 0) 70%);
+  border-radius: 50%;
+  position: fixed;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 9998;
+  mix-blend-mode: screen;
+  transition: opacity 0.3s ease;
+  opacity: 0;
+}
+
+body:hover .mouse-glow {
+  opacity: 1;
+}
+
+@media (max-width: 768px) {
+  .mouse-glow {
+    display: none;
+  }
+}
+

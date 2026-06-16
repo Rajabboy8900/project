@@ -76,6 +76,7 @@
   margin-bottom: 2.5rem;
   border-bottom: 1px solid var(--border-glass);
   padding-bottom: 1rem;
+  flex-wrap: wrap;
 }
 
 .tab-btn {
@@ -124,6 +125,13 @@
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .form-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
 }
 
 /* Lists and Tables */
@@ -237,4 +245,45 @@
   font-size: 1rem;
   line-height: 1.5;
   white-space: pre-wrap;
+}
+
+/* Analytics styles */
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-bottom: 3rem;
+}
+
+.analytics-card {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--border-glass);
+  border-radius: 20px;
+  padding: 2.5rem;
+  text-align: center;
+  backdrop-filter: blur(10px);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.analytics-card:hover {
+  transform: translateY(-5px);
+  border-color: var(--accent-neon);
+}
+
+.analytics-card h4 {
+  font-size: 1rem;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+}
+
+.analytics-card .stat-value {
+  font-size: 3.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--accent-light), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
 }

@@ -1,7 +1,20 @@
 import { motion } from 'framer-motion';
+import { API_URL } from '../config';
 import '../styles/hero.css';
 
 export default function Hero() {
+  const trackClick = async (type) => {
+    try {
+      await fetch(`${API_URL}/api/analytics/click`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type }),
+      });
+    } catch (err) {
+      console.log('Error logging analytics click', err);
+    }
+  };
+
   return (
     <section className="hero" id="home">
       <div className="hero-content">
@@ -19,9 +32,9 @@ export default function Hero() {
           <p className="hero-subtitle">Backend Developer</p>
           
           <div className="hero-socials">
-            <a href="https://github.com/Rajabboy8900" target="_blank" rel="noreferrer">GitHub</a>
-            <a href="https://www.linkedin.com/in/rajabboy007/" target="_blank" rel="noreferrer">LinkedIn</a>
-            <a href="https://t.me/R_rajabovv" target="_blank" rel="noreferrer">Telegram</a>
+            <a href="https://github.com/Rajabboy8900" target="_blank" rel="noreferrer" onClick={() => trackClick('github')}>GitHub</a>
+            <a href="https://www.linkedin.com/in/rajabboy007/" target="_blank" rel="noreferrer" onClick={() => trackClick('linkedin')}>LinkedIn</a>
+            <a href="https://t.me/R_rajabovv" target="_blank" rel="noreferrer" onClick={() => trackClick('telegram')}>Telegram</a>
           </div>
         </motion.div>
 

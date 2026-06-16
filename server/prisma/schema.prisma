@@ -16,13 +16,27 @@ model Skill {
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
-  title       String
-  description String
-  tags        String   // comma separated tags, e.g., "TypeScript,Node.js"
-  link        String   @default("#")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id              Int      @id @default(autoincrement())
+  title           String
+  description     String
+  longDescription String?  // Detailed description
+  tags            String   // comma separated tags, e.g., "TypeScript,Node.js"
+  link            String   @default("#")
+  githubLink      String?  // GitHub code link
+  imageUrl        String?  // URL of screenshot
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model BlogPost {
+  id        Int      @id @default(autoincrement())
+  title     String
+  summary   String
+  content   String   // Markdown content
+  category  String   // Technical, Personal, etc.
+  readTime  Int      @default(3) // minutes
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Message {
@@ -30,6 +44,25 @@ model Message {
   name      String
   email     String
   message   String
+  createdAt DateTime @default(now())
+}
+
+model Analytics {
+  id             Int      @id @default(1)
+  pageViews      Int      @default(0)
+  telegramClicks Int      @default(0)
+  githubClicks   Int      @default(0)
+  linkedinClicks Int      @default(0)
+  updatedAt      DateTime @updatedAt
+}
+
+model VisitorLog {
+  id        Int      @id @default(autoincrement())
+  ip        String   @default("unknown")
+  userAgent String   @default("unknown")
+  device    String   @default("unknown")
+  browser   String   @default("unknown")
+  os        String   @default("unknown")
   createdAt DateTime @default(now())
 }
 

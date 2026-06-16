@@ -16,6 +16,39 @@ const PORT = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
+// Helper function to parse user agent for device, OS, and browser
+function parseUserAgent(uaString: string) {
+  let device = 'Desktop';
+  let os = 'Unknown OS';
+  let browser = 'Unknown Browser';
+
+  const ua = uaString.toLowerCase();
+
+  // 1. Detect Device
+  if (/mobile|android|iphone|ipad|phone/i.test(ua)) {
+    device = 'Mobile';
+  } else if (/tablet|playbook|silk/i.test(ua)) {
+    device = 'Tablet';
+  }
+
+  // 2. Detect OS
+  if (ua.includes('windows')) os = 'Windows';
+  else if (ua.includes('macintosh') || ua.includes('mac os')) os = 'macOS';
+  else if (ua.includes('iphone') || ua.includes('ipad')) os = 'iOS';
+  else if (ua.includes('android')) os = 'Android';
+  else if (ua.includes('linux')) os = 'Linux';
+
+  // 3. Detect Browser
+  if (ua.includes('firefox')) browser = 'Firefox';
+  else if (ua.includes('chrome') && !ua.includes('chromium')) browser = 'Chrome';
+  else if (ua.includes('safari') && !ua.includes('chrome')) browser = 'Safari';
+  else if (ua.includes('edge')) browser = 'Edge';
+  else if (ua.includes('opera') || ua.includes('opr')) browser = 'Opera';
+
+  return { device, os, browser };
+}
+
+// Helper function to send Telegram messages
 function sendTelegramMessage(text: string) {
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
@@ -92,7 +125,6 @@ app.post('/api/contact', async (req, res) => {
       data: { name, email, message },
     });
 
-    // Send to Telegram
     const telegramText = `📩 *Yangi Xabar!*\n\n👤 *Ism:* ${name}\n📧 *Email:* ${email}\n📝 *Xabar:* ${message}`;
     sendTelegramMessage(telegramText);
 
@@ -100,6 +132,86 @@ app.post('/api/contact', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to save message' });
+  }
+});
+
+// Analytics: Track view & save visitor details
+app.post('/api/analytics/view', async (req, res) => {
+  try {
+    // 1. Increment global view count
+    await prisma.analytics.update({
+      where: { id: 1 },
+      data: { pageViews: { increment: 1 } },
+    });
+
+    // 2. Parse and save visitor details
+    const ip = (req.headers['x-forwarded-for'] as string) || req.socket.remoteAddress || 'unknown';
+    const userAgent = req.headers['user-agent'] || 'unknown';
+    const { device, os, browser } = parseUserAgent(userAgent);
+
+    const log = await prisma.visitorLog.create({
+      data: {
+        ip: ip.split(',')[0].trim(),
+        userAgent,
+        device,
+        browser,
+        os,
+      },
+    });
+
+    res.json({ success: true, log });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to track view' });
+  }
+});
+
+// Analytics: Track click
+app.post('/api/analytics/click', async (req, res) => {
+  const { type } = req.body;
+  if (!type || !['telegram', 'github', 'linkedin'].includes(type)) {
+    return res.status(400).json({ error: 'Invalid click type' });
+  }
+
+  try {
+    const updateData: any = {};
+    if (type === 'telegram') updateData.telegramClicks = { increment: 1 };
+    if (type === 'github') updateData.githubClicks = { increment: 1 };
+    if (type === 'linkedin') updateData.linkedinClicks = { increment: 1 };
+
+    const stats = await prisma.analytics.update({
+      where: { id: 1 },
+      data: updateData,
+    });
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to track click' });
+  }
+});
+
+// Get all blogs
+app.get('/api/blogs', async (req, res) => {
+  try {
+    const blogs = await prisma.blogPost.findMany({
+      orderBy: { createdAt: 'desc' },
+    });
+    res.json(blogs);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch blogs' });
+  }
+});
+
+// Get single blog
+app.get('/api/blogs/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const blog = await prisma.blogPost.findUnique({
+      where: { id: Number(id) },
+    });
+    if (!blog) return res.status(404).json({ error: 'Blog post not found' });
+    res.json(blog);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch blog post' });
   }
 });
 
@@ -133,7 +245,30 @@ app.post('/api/admin/login', async (req, res) => {
   }
 });
 
-// PROTECTED ADMIN ROUTES (authMiddleware applied)
+// PROTECTED ADMIN ROUTES
+
+// Get global analytics summary
+app.get('/api/analytics', authMiddleware, async (req: AuthRequest, res) => {
+  try {
+    const stats = await prisma.analytics.findUnique({ where: { id: 1 } });
+    res.json(stats);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch analytics' });
+  }
+});
+
+// Get recent visitor logs (Admin only)
+app.get('/api/analytics/logs', authMiddleware, async (req: AuthRequest, res) => {
+  try {
+    const logs = await prisma.visitorLog.findMany({
+      orderBy: { createdAt: 'desc' },
+      take: 50,
+    });
+    res.json(logs);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to fetch visitor logs' });
+  }
+});
 
 // Skills CRUD
 app.post('/api/skills', authMiddleware, async (req: AuthRequest, res) => {
@@ -175,13 +310,21 @@ app.delete('/api/skills/:id', authMiddleware, async (req: AuthRequest, res) => {
 
 // Projects CRUD
 app.post('/api/projects', authMiddleware, async (req: AuthRequest, res) => {
-  const { title, description, tags, link } = req.body;
+  const { title, description, tags, link, longDescription, githubLink, imageUrl } = req.body;
   if (!title || !description || !tags) {
     return res.status(400).json({ error: 'Title, description, and tags are required' });
   }
   try {
     const project = await prisma.project.create({
-      data: { title, description, tags, link: link || '#' },
+      data: { 
+        title, 
+        description, 
+        tags, 
+        link: link || '#',
+        longDescription,
+        githubLink,
+        imageUrl
+      },
     });
     res.json(project);
   } catch (error) {
@@ -191,11 +334,11 @@ app.post('/api/projects', authMiddleware, async (req: AuthRequest, res) => {
 
 app.put('/api/projects/:id', authMiddleware, async (req: AuthRequest, res) => {
   const { id } = req.params;
-  const { title, description, tags, link } = req.body;
+  const { title, description, tags, link, longDescription, githubLink, imageUrl } = req.body;
   try {
     const project = await prisma.project.update({
       where: { id: Number(id) },
-      data: { title, description, tags, link },
+      data: { title, description, tags, link, longDescription, githubLink, imageUrl },
     });
     res.json(project);
   } catch (error) {
@@ -213,7 +356,59 @@ app.delete('/api/projects/:id', authMiddleware, async (req: AuthRequest, res) =>
   }
 });
 
-// Get all messages (Admin only)
+// Blogs CRUD
+app.post('/api/blogs', authMiddleware, async (req: AuthRequest, res) => {
+  const { title, summary, content, category, readTime } = req.body;
+  if (!title || !summary || !content || !category) {
+    return res.status(400).json({ error: 'Title, summary, content, and category are required' });
+  }
+  try {
+    const blog = await prisma.blogPost.create({
+      data: { 
+        title, 
+        summary, 
+        content, 
+        category, 
+        readTime: Number(readTime) || 3 
+      },
+    });
+    res.json(blog);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create blog post' });
+  }
+});
+
+app.put('/api/blogs/:id', authMiddleware, async (req: AuthRequest, res) => {
+  const { id } = req.params;
+  const { title, summary, content, category, readTime } = req.body;
+  try {
+    const blog = await prisma.blogPost.update({
+      where: { id: Number(id) },
+      data: { 
+        title, 
+        summary, 
+        content, 
+        category, 
+        readTime: Number(readTime) 
+      },
+    });
+    res.json(blog);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update blog post' });
+  }
+});
+
+app.delete('/api/blogs/:id', authMiddleware, async (req: AuthRequest, res) => {
+  const { id } = req.params;
+  try {
+    await prisma.blogPost.delete({ where: { id: Number(id) } });
+    res.json({ success: true, message: 'Blog post deleted' });
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete blog post' });
+  }
+});
+
+// Messages List
 app.get('/api/messages', authMiddleware, async (req: AuthRequest, res) => {
   try {
     const messages = await prisma.message.findMany({
@@ -225,7 +420,6 @@ app.get('/api/messages', authMiddleware, async (req: AuthRequest, res) => {
   }
 });
 
-// Delete a message
 app.delete('/api/messages/:id', authMiddleware, async (req: AuthRequest, res) => {
   const { id } = req.params;
   try {
